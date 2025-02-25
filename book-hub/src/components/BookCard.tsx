@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface BookProps {
   book: {
@@ -15,9 +16,7 @@ const BookCard: React.FC<BookProps> = ({ book }) => {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <motion.div
-      className="relative rounded-lg shadow-md overflow-hidden bg-white dark:bg-dark text-dark dark:text-light w-full sm:w-64 lg:w-80 h-80 mb-4 transition-all"
-    >
+    <motion.div className="relative rounded-lg shadow-md overflow-hidden bg-white dark:bg-dark text-dark dark:text-light w-full sm:w-64 lg:w-80 h-80 mb-4 transition-all">
       {/* Flip Effect */}
       <motion.button
         className="absolute inset-0 cursor-pointer"
@@ -42,10 +41,16 @@ const BookCard: React.FC<BookProps> = ({ book }) => {
           </div>
         </div>
       )}
+
+      {/* Navigate to Book Details */}
+      <Link
+        to="/bookdetail"
+        state={{ book }}
+        className="absolute inset-0"
+        aria-label={`View details for ${book.title}`}
+      />
     </motion.div>
   );
 };
 
 export default BookCard;
-
-

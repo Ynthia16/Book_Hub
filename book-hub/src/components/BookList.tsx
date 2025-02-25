@@ -98,6 +98,3 @@ const BookList: React.FC = () => {
 };
 
 export default BookList;
-
-
-

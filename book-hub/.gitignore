@@ -1,23 +1,67 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$PYTHONWARNINGS
+
+# Virtual environment
+venv/
+.env/
+
+# Dependency directories
+node_modules/
+.pnp/
 .pnp.js
 
-# testing
-/coverage
+# Testing
+coverage/
+htmlcov/
+*.cover
+*.py,cover
+.hypothesis/
+.tox/
+.nox/
+pytest_cache/
 
-# production
-/build
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
-# misc
+# Logs and database
+logs/
+*.log
+*.sqlite3
+*.db
+*.sqlite
+
+# Production build
+/build/
+dist/
+*.egg-info/
+.installed.cfg
+
+# Miscellaneous system files
 .DS_Store
+Thumbs.db
+
+# Environment variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# Package manager debug files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pip-log.txt
+pip-delete-this-directory.txt
+
+# VSCode settings (if using VSCode)
+.vscode/
+
+# MacOS system files
+*.swp
+*.swo
+

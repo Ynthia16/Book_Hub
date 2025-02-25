@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
-  placeholder: string; // Accept placeholder as a prop
+  placeholder: string; 
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder }) => {
@@ -35,7 +35,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, placeholder }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder={placeholder} // Use the placeholder prop here
+          placeholder={placeholder} 
           className="p-2 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark dark:border-gray-600 dark:text-light pr-10"
           aria-label="Search for books"
         />

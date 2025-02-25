@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BookCard from "./BookCard";
-import { useTheme } from "../context/ThemeContext"; // Import useTheme()
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useTheme } from "../context/ThemeContext"; 
+import { useNavigate } from "react-router-dom"; 
 
 interface Book {
   id: string;
@@ -13,12 +13,12 @@ interface Book {
 }
 
 const HomePage: React.FC = () => {
-  const { theme } = useTheme(); // Get the theme state from Context API
+  const { theme } = useTheme(); 
   const [books, setBooks] = useState<Book[]>([]);
   const [view, setView] = useState<"grid" | "list">("grid");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate(); // Initialize navigate to handle route change
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     axios
