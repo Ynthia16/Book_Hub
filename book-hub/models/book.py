@@ -1,8 +1,7 @@
-# models/book.py
+
 from sqlalchemy import Column, Integer, String
 from database import Base
 
-# Define the Book model
 class Book(Base):
     __tablename__ = "books"
 

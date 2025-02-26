@@ -20,7 +20,6 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     }
   };
 
-  // Handle page jump via input
   const handlePageJump = (e: React.ChangeEvent<HTMLInputElement>) => {
     const page = Number(e.target.value);
     if (page >= 1 && page <= totalPages) {

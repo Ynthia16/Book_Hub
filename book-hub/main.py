@@ -1,16 +1,13 @@
-# main.py
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models.book import Book
 from database import SessionLocal, engine
 from schemas import BookBase, BookResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import update, delete
+import requests
 
-# Create the database tables if they don't exist
 Book.metadata.create_all(bind=engine)
 
-# Initialize FastAPI
 app = FastAPI()
 
 # CORS settings
@@ -35,33 +32,42 @@ def home():
     return {"message": "Welcome to Book Hub API"}
 
 @app.get("/books", response_model=list[BookResponse])
-def get_books(q: str = "harry potter", db: Session = Depends(get_db)):
+def get_books(q: str = "", db: Session = Depends(get_db)):
     """
     Fetch books from the database, or if not found, fetch from an external API.
     """
-    books = db.query(Book).filter(Book.title.contains(q)).all()
+    # Only filter by title if 'q' is provided
+    if q:
+        books = db.query(Book).filter(Book.title.contains(q)).all()
+    else:
+        books = db.query(Book).all()  
     
-    # If no books found in DB, fetch from an external API
+    # Fetch books from an external API if no books were found in DB
     if not books:
-        import requests
         url = f"https://openlibrary.org/search.json?q={q}&limit=5"
         response = requests.get(url)
         data = response.json()
 
-        books = []
+        # Convert existing books in the database to a set of titles for comparison
+        existing_titles = {book.title for book in books}
+        
+        # Adding books fetched from the external API
         for item in data.get("docs", []):
             cover_id = item.get("cover_i")
             cover_url = None
             if cover_id:
                 cover_url = f"http://covers.openlibrary.org/b/id/{cover_id}-L.jpg"
             
-            books.append({
-                "title": item.get("title", "Unknown Title"),
-                "author": item.get("author_name", ["Unknown Author"])[0],
-                "cover": cover_url,  
-                "description": item.get("first_sentence", ["No description available"])[0],  
-            })
-    
+            title = item.get("title", "Unknown Title")
+            # Only add the book if it's not already in the list
+            if title not in existing_titles:
+                books.append({
+                    "title": title,
+                    "author": item.get("author_name", ["Unknown Author"])[0],
+                    "cover": cover_url,  
+                    "description": item.get("first_sentence", ["No description available"])[0],  
+                })
+
     return books
 
 @app.post("/books", response_model=BookResponse)
@@ -113,4 +119,3 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     db.delete(db_book)
     db.commit()
     return db_book
-

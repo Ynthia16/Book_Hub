@@ -32,7 +32,7 @@ const BookList: React.FC = () => {
       const data = await response.json();
       setBooks(data);
       setFilteredBooks(data);
-      setTotalPages(Math.ceil(data.length / 5)); // 5 books per page
+      setTotalPages(Math.ceil(data.length / 5));
       setLoading(false);
     } catch (error) {
       setError("Error fetching books. Please try again later.");
